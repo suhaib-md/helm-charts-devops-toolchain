@@ -1,0 +1,9 @@
+# Never commit key material - create TLS secrets in the cluster instead (see README)
+*.key
+*.pem
+*.crt
+*.pfx
+*.p12
+
+# Local backups made by backup-*.sh
+*-backup-*/
