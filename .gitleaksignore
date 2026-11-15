@@ -1,0 +1,2 @@
+# False positive: Jenkins plugin version pin (credentials-binding:<version>), not a key
+2a9eccb2ec8f391bbe44a409671f651f13440097:jenkins-chart/values.yaml:generic-api-key:55
