@@ -60,3 +60,29 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Resolve one key of the chart-managed Secret. Returns the base64-encoded value.
+Order: explicit value from values.yaml / --set  >  value already stored in the
+release's Secret (so a generated password survives `helm upgrade`)  >  new random.
+Usage: include "argocd-chart.secretValue" (dict "namespace" NS "name" SECRET "key" KEY "value" VALUE)
+*/}}
+{{- define "argocd-chart.secretValue" -}}
+{{- if .value -}}
+{{- .value | b64enc -}}
+{{- else -}}
+{{- $existing := lookup "v1" "Secret" .namespace .name -}}
+{{- if and $existing $existing.data (hasKey $existing.data .key) -}}
+{{- index $existing.data .key -}}
+{{- else -}}
+{{- randAlphaNum 24 | b64enc -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Name of the Secret holding credentials: the user's existingSecret, or the one this chart creates.
+*/}}
+{{- define "argocd-chart.secretName" -}}
+{{- default ("argocd-secret") .Values.argocd.existingSecret -}}
+{{- end -}}

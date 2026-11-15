@@ -44,12 +44,12 @@ spec:
         - name: SONAR_JDBC_USERNAME
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Name }}-sonarqube-secret
+              name: {{ include "sonarqube-chart.secretName" . }}
               key: db-username
         - name: SONAR_JDBC_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Name }}-sonarqube-secret
+              name: {{ include "sonarqube-chart.secretName" . }}
               key: db-password
         - name: SONAR_WEB_JAVAADDITIONALOPTS
           value: "{{ .Values.sonarqube.server.jvmOpts }}"

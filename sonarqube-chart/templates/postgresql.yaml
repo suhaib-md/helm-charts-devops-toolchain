@@ -29,9 +29,15 @@ spec:
         - name: POSTGRES_DB
           value: {{ .Values.sonarqube.database.postgresql.database }}
         - name: POSTGRES_USER
-          value: {{ .Values.sonarqube.database.postgresql.username }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "sonarqube-chart.secretName" . }}
+              key: db-username
         - name: POSTGRES_PASSWORD
-          value: {{ .Values.sonarqube.database.postgresql.password }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "sonarqube-chart.secretName" . }}
+              key: db-password
         volumeMounts:
         - name: postgresql-data
           mountPath: /var/lib/postgresql/data

@@ -35,7 +35,14 @@ sonarqube:
 
   admin:
     username: "admin"
-    password: "REDACTED"  # Change in production
+    # Leave empty to auto-generate (the value is kept across upgrades),
+    # or set it at install time: --set sonarqube.admin.password=...
+    password: ""
+
+  # Name of an existing Secret with keys "admin-username", "admin-password",
+  # "db-username" and "db-password". When set, the chart does not create its own
+  # Secret and the password values below are ignored.
+  existingSecret: ""
 
   database:
     # Set to true to use external database
@@ -45,7 +52,7 @@ sonarqube:
     port: 5432
     name: "sonarqube"
     username: "sonarqube"
-    password: "REDACTED"
+    password: ""  # required when external: true (--set sonarqube.database.password=...)
     # Internal PostgreSQL settings (when external: false)
     postgresql:
       enabled: true
@@ -54,7 +61,7 @@ sonarqube:
         tag: "13"
       storage: 10Gi
       username: "sonarqube"
-      password: "REDACTED"
+      password: ""  # empty = auto-generate (kept across upgrades)
       database: "sonarqube"
 
   config:

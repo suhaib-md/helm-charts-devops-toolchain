@@ -37,7 +37,13 @@ jenkins:
   # Jenkins admin configuration
   admin:
     username: "admin"
-    password: "REDACTED"
+    # Leave empty to auto-generate (the value is kept across upgrades),
+    # or set it at install time: --set jenkins.admin.password=...
+    password: ""
+  # Name of an existing Secret with keys "jenkins-admin-user" and
+  # "jenkins-admin-password" (plus "database-username"/"database-password" if
+  # database.external.enabled). When set, the chart does not create its own Secret.
+  existingSecret: ""
 
   # Plugin installation
   installPlugins:
@@ -130,8 +136,7 @@ database:
     port: 5432
     name: "jenkins"
     username: "jenkins"
-    password: ""
-    existingSecret: ""
+    password: ""  # required when enabled; pass with --set database.external.password=...
 
 # Backup configuration
 backup:

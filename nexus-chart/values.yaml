@@ -41,6 +41,10 @@ nexus:
   admin:
     username: "admin"
     randomPassword: true  # Changed to true to generate admin.password file
+    # Nexus generates the initial admin password itself and writes it to
+    # /nexus-data/admin.password; you change it in the setup wizard on first login.
+    # Only set this if you need the chart Secret to carry a known value.
+    password: ""
 
   # Environment variables - FIXED
   env:

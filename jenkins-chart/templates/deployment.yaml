@@ -32,12 +32,12 @@ spec:
         - name: JENKINS_ADMIN_USERNAME
           valueFrom:
             secretKeyRef:
-              name: {{ include "jenkins-chart.fullname" . }}-secret
+              name: {{ include "jenkins-chart.secretName" . }}
               key: jenkins-admin-user
         - name: JENKINS_ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "jenkins-chart.fullname" . }}-secret
+              name: {{ include "jenkins-chart.secretName" . }}
               key: jenkins-admin-password
         - name: CASC_JENKINS_CONFIG
           value: "/var/jenkins_home/casc_configs/jenkins.yaml"

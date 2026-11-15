@@ -25,7 +25,12 @@ argocd:
     storageClass: standard
     size: 8Gi
   admin:
-    password: "REDACTED"  # Change in production
+    # Leave empty to auto-generate (the value is kept across upgrades),
+    # or set it at install time: --set argocd.admin.password=...
+    password: ""
+  # Name of an existing Secret with key "admin-password". When set, the chart
+  # does not create its own Secret and admin.password is ignored.
+  existingSecret: ""
   rbac:
     enabled: true
   config:
